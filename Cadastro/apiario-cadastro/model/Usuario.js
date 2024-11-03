@@ -1,6 +1,10 @@
 const { query } = require('express');
 const connection = require('../config/db')
 const crypto = require('crypto')
+const mysql = require('mysql2/promise')
+
+
+
 
 class Usuario {
 
@@ -11,23 +15,22 @@ class Usuario {
     }
 
     //CRUD - cadastro
-    static async criaUsuario(dados){
-        const {nome, email, senha} = dados;
+    static async criaUsuario({ nome, email, senha }) {
+        const query = 'INSERT INTO Usuario (nome, email, senha) VALUES (?, ?, ?)';
 
-        const hash = crypto.createHash('sha256').update(senha).digest('hex');
-
-        return new Promise((resolve, reject)=> {
-            const query = 'insert into Usuario(nome, email, senha) values(?, ?, ?)'
-            connection.query(query, [nome, email, hash], (error, results)=>{
-                if (error){
-                    return reject(error)
-                }
-                resolve(results.insertId)
-            })
-        })
+        let conn;
+        try {
+            conn = await connection.getConnection(); // Obtendo uma conexão do pool
+            const [results] = await conn.query(query, [nome, email, senha]);
+            return results.insertId;
+        } catch (error) {
+            throw new Error(`Erro ao inserir usuário no banco: ${error.message}`);
+        } finally {
+            if (conn) conn.release(); // Liberando a conexão de volta ao pool
+        }
     }
 
-    //CRUD - exclusao
+    //CRUD - exclusao // CONTROLER CRIADO
     static async excluirUsuario(idUsuario) {
         const id = idUsuario
         return new  Promise ((resolve,reject) => {
