@@ -5,7 +5,7 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 
-// configuracao do pool de conexao
+// Criando e configuracao do pool de conexao
 const pool = mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,

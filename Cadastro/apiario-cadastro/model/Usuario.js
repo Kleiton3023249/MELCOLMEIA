@@ -1,6 +1,5 @@
 const { query } = require('express');
-const connection = require('../config/db')
-const crypto = require('crypto')
+const connection = require('../config/db') // Chamo minha pool expotada do arq coneccao
 const mysql = require('mysql2/promise')
 
 
@@ -29,6 +28,8 @@ class Usuario {
             if (conn) conn.release(); // Liberando a conexão de volta ao pool
         }
     }
+
+
 
     //CRUD - exclusao // CONTROLER CRIADO
     static async excluirUsuario(idUsuario) {
