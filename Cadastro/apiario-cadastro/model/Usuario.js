@@ -15,17 +15,17 @@ class Usuario {
 
     //CRUD - cadastro
     static async criaUsuario({ nome, email, senha }) {
-        const query = 'INSERT INTO Usuario (nome, email, senha) VALUES (?, ?, ?)';
+        const query = 'INSERT INTO Usuario (nome, email, senha) VALUES (?, ?, ?)'
 
-        let conn;
+        let conn
         try {
-            conn = await connection.getConnection(); // Obtendo uma conexão do pool
-            const [results] = await conn.query(query, [nome, email, senha]);
+            conn = await connection.getConnection() // Obtendo uma conexão do pool
+            const [results] = await conn.query(query, [nome, email, senha])
             return results.insertId;
         } catch (error) {
-            throw new Error(`Erro ao inserir usuário no banco: ${error.message}`);
+            throw new Error(`Erro ao inserir usuário no banco: ${error.message}`)
         } finally {
-            if (conn) conn.release(); // Liberando a conexão de volta ao pool
+            if (conn) conn.release();// Liberando a conexão de volta ao pool
         }
     }
 
@@ -34,16 +34,18 @@ class Usuario {
     //CRUD - exclusao // CONTROLER CRIADO
     static async excluirUsuario(idUsuario) {
         const id = idUsuario
-        return new  Promise ((resolve,reject) => {
-            const query = 'DELETE FROM Usuario WHERE id = ?';
-            connection.query(query,[id], (error,results) => {
-                if (error) {
-                    return reject(error);
-                }
-                resolve(results.effectedRows);
-            })
+        let conn
+        const query = 'DELETE FROM Usuario WHERE id = ?'
 
-        })
+        try {
+            conn = await connection.getConnection()
+            await conn.query(query,[id])
+            
+        } catch (error){
+            throw new Error(`Erro ao excluir usuário no banco: ${error.message}`)
+        } finally {
+            if (conn) conn.release()
+        }
     }
 
 
@@ -51,39 +53,36 @@ class Usuario {
     static async atualizarUsuario(dados) {
 
         const {valor, id} = dados
+        let conn
+        const query = 'update Usuario set email = ? where id = ?'
 
-        console.log(dados)
-
-        return new Promise ((resolve, reject) => {
-            const query = 'update Usuario set email = ? where id = ?'
-            connection.query(query, [valor, id], (error,results) => {
-                if (error) {
-                    return reject(error);
-                }
-                resolve(results.effectedRows);
-            })
-        }) 
+        try {
+            conn = await connection.getConnection()
+            await conn.query(query,[valor,id])
+         
+        } catch (error){
+            throw new Error(`Erro ao atualizar dado no banco: ${error.message}`)
+        } finally {
+            if (conn) conn.release()
+        }
+     
     }
 
     //CRUD - leitura
     static async mostraUsuario(dados){
         const id = dados
+        let conn
+        const query = 'select * from Usuario where id = ?'
 
-        return new Promise ((resolve, reject)=>{
-            const query = 'select * from Usuario where id = ?'
-            connection.query(query, id, (error, results)=>{
-                if(error){
-                    return reject(error)
-                }
+        try {
+            conn = await connection.getConnection()
+            await conn.query(query [id])
+        } catch (error){
+            throw new Error(`Erro ao buscar informação no banco: ${error.message}`)
+        } finally {
+            if (conn) conn.release()
+        }
 
-                if(results.length > 0){
-                    resolve(results[0])
-                } else {
-                    resolve(null)
-                }
-                
-            })
-        })
     }
 }
 
