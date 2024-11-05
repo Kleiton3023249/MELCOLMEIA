@@ -1,3 +1,4 @@
+const { error } = require('console')
 const Usuario = require('../model/Usuario')
 const crypto = require('crypto')
 
@@ -18,4 +19,22 @@ const criaUsuario = async (req, res) => {
     }
 }
 
-module.exports = {criaUsuario}
+
+const deletaUsuario = async (req, res) => {
+
+
+    try{
+        const {id} = req.params
+
+        Usuario.deletaUsuario(id)
+
+        res.status(201).json({mensagem: `Usuario ${id} deletado`})
+
+    }catch (error) {
+        res.status(500).json({error: "Erro ao excluir usuario", details: error.details})
+    }
+    
+}
+
+
+module.exports = {criaUsuario, deletaUsuario}

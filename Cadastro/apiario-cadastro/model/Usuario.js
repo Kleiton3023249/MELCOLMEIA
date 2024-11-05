@@ -39,8 +39,8 @@ class Usuario {
 
         try {
             conn = await connection.getConnection()
-            await conn.query(query,[id])
-            
+            const results = await conn.query(query,[id])
+            return results
         } catch (error){
             throw new Error(`Erro ao excluir usuário no banco: ${error.message}`)
         } finally {
