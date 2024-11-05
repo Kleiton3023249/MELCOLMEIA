@@ -26,12 +26,12 @@ const deletaUsuario = async (req, res) => {
     try{
         const {id} = req.params
 
-        Usuario.deletaUsuario(id)
+        await Usuario.excluirUsuario(id)
 
-        res.status(201).json({mensagem: `Usuario ${id} deletado`})
+        res.status(200).json({mensagem: `Usuario ${id} deletado`})
 
     }catch (error) {
-        res.status(500).json({error: "Erro ao excluir usuario", details: error.details})
+        res.status(500).json({error: "Erro ao excluir usuario", details: error.message})
     }
     
 }

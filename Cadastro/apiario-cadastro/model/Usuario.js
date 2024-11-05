@@ -29,18 +29,22 @@ class Usuario {
         }
     }
 
-
-
     //CRUD - exclusao // CONTROLER CRIADO
     static async excluirUsuario(idUsuario) {
         const id = idUsuario
-        let conn
         const query = 'DELETE FROM Usuario WHERE id = ?'
+        let conn
 
         try {
             conn = await connection.getConnection()
-            const results = await conn.query(query,[id])
-            return results
+            const [results] = await conn.query(query,[id])
+            
+            console.log(results)
+
+            if (results.affectedRows === 0){
+                throw new Error('Nenhum usuario encontrado com o id ${id}')
+            }
+
         } catch (error){
             throw new Error(`Erro ao excluir usuário no banco: ${error.message}`)
         } finally {
