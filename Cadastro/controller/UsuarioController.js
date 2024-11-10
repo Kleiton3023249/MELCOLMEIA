@@ -1,6 +1,8 @@
 const { error } = require('console')
-const Usuario = require('../model/Usuario')
+const Usuario = require('../model/UsuarioModel')
 const crypto = require('crypto')
+const jwt = require('jsonwebtoken')
+const connection = require('../config/db') 
 
 const criaUsuario = async (req, res) => {
 
@@ -21,8 +23,6 @@ const criaUsuario = async (req, res) => {
 
 
 const deletaUsuario = async (req, res) => {
-
-
     try{
         const {id} = req.params
 
@@ -36,5 +36,44 @@ const deletaUsuario = async (req, res) => {
     
 }
 
+const login = async (req, res) => {
+    const {email, senha } = req.body
+    
+    const query = "select * from Usuario where email = ?"
 
-module.exports = {criaUsuario, deletaUsuario}
+    console.log({email, senha}) // CHEGA ATE AQUI -----------
+
+    await connection.query(query, [email], async () => {
+
+        if(err, results){
+            console.log("erro de consulta DB: ", err)
+            return res.status(500).send('Usuario nao encontrado')
+        }
+
+        if (results.length === 0){
+            return res.status(400).send("Usuario nao encontrado")
+        }
+
+        const usuario = results[0] // usuario encontrado (primeira posicao)
+
+        
+        //hashear senha
+        const senhaHashTentativa = crypto.createHash('sha256').update(senha).digest('hex')
+        
+        //comprar com a senha do banco
+
+        if(senhaHashTentativa !== usuario.senha){
+            return res.status(400).send("Senha invalida")
+        }
+
+        const token = jwt.sign({email: usuario.email, id: usuario.id}, process.env.JWT_SECRET, {expiresIn:'1h'})
+
+        res.status(200).json({token})
+    })
+
+
+
+}
+
+
+module.exports = {criaUsuario, deletaUsuario, login}
