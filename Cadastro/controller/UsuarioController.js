@@ -36,44 +36,25 @@ const deletaUsuario = async (req, res) => {
     
 }
 
-const login = async (req, res) => {
-    const {email, senha } = req.body
+const login = async (req, res) => { 
+    const {email, senha } = req.body 
     
-    const query = "select * from Usuario where email = ?"
 
-    console.log({email, senha}) // CHEGA ATE AQUI -----------
+    const usuario = await Usuario.getUsuarioByEmail(email)
 
-    await connection.query(query, [email], async () => {
+    const senhaHashTentativa = crypto.createHash('sha256').update(senha).digest('hex')
 
-        if(err, results){
-            console.log("erro de consulta DB: ", err)
-            return res.status(500).send('Usuario nao encontrado')
-        }
+    
+    if(senhaHashTentativa !== usuario[0].senha){
+        return res.status(400).send("Senha invalida")
+    }
 
-        if (results.length === 0){
-            return res.status(400).send("Usuario nao encontrado")
-        }
+    const token = jwt.sign({email: usuario.email, id: usuario.id}, process.env.JWT_SECRET, {expiresIn:'1h'})
 
-        const usuario = results[0] // usuario encontrado (primeira posicao)
-
-        
-        //hashear senha
-        const senhaHashTentativa = crypto.createHash('sha256').update(senha).digest('hex')
-        
-        //comprar com a senha do banco
-
-        if(senhaHashTentativa !== usuario.senha){
-            return res.status(400).send("Senha invalida")
-        }
-
-        const token = jwt.sign({email: usuario.email, id: usuario.id}, process.env.JWT_SECRET, {expiresIn:'1h'})
-
-        res.status(200).json({token})
-    })
-
-
-
+    res.status(200).json({token})
+    
 }
+
 
 
 module.exports = {criaUsuario, deletaUsuario, login}

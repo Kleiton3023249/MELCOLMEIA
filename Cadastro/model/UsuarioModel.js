@@ -53,40 +53,28 @@ class Usuario {
     }
 
 
-    //CRUD - atualizacao
-    static async atualizarUsuario(dados) {
-
-        const {valor, id} = dados
+    static async getUsuarioByEmail(email){
+        
+        const query = "select * from Usuario where email = ?"
         let conn
-        const query = 'update Usuario set email = ? where id = ?'
 
-        try {
+        try{
             conn = await connection.getConnection()
-            await conn.query(query,[valor,id])
-         
-        } catch (error){
-            throw new Error(`Erro ao atualizar dado no banco: ${error.message}`)
-        } finally {
-            if (conn) conn.release()
-        }
-     
-    }
+            const results = await conn.query(query, [email])
+            
 
-    //CRUD - leitura
-    static async mostraUsuario(dados){
-        const id = dados
-        let conn
-        const query = 'select * from Usuario where id = ?'
+            if(!results || results.length === 0){
+                console.log("Usuario nao encontrado")
+                return res.status(400).send("Usuario nao encontrado")
+            }
 
-        try {
-            conn = await connection.getConnection()
-            await conn.query(query [id])
-        } catch (error){
-            throw new Error(`Erro ao buscar informação no banco: ${error.message}`)
-        } finally {
-            if (conn) conn.release()
-        }
+            const usuario = results[0]
+            return usuario
 
+        }catch(err){
+            console.log("erro de consulta DB: ", err)
+            return res.status(500).send('Usuario nao encontrado')
+        } 
     }
     
 }
