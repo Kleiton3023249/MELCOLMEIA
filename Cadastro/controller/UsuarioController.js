@@ -1,8 +1,7 @@
-const { error } = require('console')
 const Usuario = require('../model/UsuarioModel')
 const crypto = require('crypto')
 const jwt = require('jsonwebtoken')
-const connection = require('../config/db') 
+
 
 const criaUsuario = async (req, res) => {
 
@@ -39,11 +38,9 @@ const deletaUsuario = async (req, res) => {
 const login = async (req, res) => { 
     const {email, senha } = req.body 
     
-
     const usuario = await Usuario.getUsuarioByEmail(email)
 
     const senhaHashTentativa = crypto.createHash('sha256').update(senha).digest('hex')
-
     
     if(senhaHashTentativa !== usuario[0].senha){
         return res.status(400).send("Senha invalida")
