@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 const criaUsuario = async (req, res) => {
 
     try{
-
+        console.log(req.body)
         const {nome, email, senha} = req.body //No corpo da requisicao (reqbody), vira os dados
 
         const senhaHash = crypto.createHash('sha256').update(senha).digest('hex') // pega um atributo senha e o passa num algo hash que retorna senhahash
@@ -52,6 +52,19 @@ const login = async (req, res) => {
     
 }
 
+const atualizaDados = async (req, res) =>{
+
+    console.log(req.body)
+
+    const {nome,email,rua,cidade,estado,cep,pais, id} = req.body
+
+    const usuario = await Usuario.getUsuarioById(id)
+
+    const response = await Usuario.atualizaDados({nome,email,rua,cidade,estado,cep,pais, id})
+
+    res.send(response)
+}
 
 
-module.exports = {criaUsuario, deletaUsuario, login}
+
+module.exports = {criaUsuario, deletaUsuario, login, atualizaDados}

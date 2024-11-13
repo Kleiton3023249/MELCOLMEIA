@@ -10,6 +10,8 @@ router.delete('/Usuario/:id', UsuarioController.deletaUsuario)
 
 router.post('/Usuario/login', UsuarioController.login)
 
+router.post('/Usuario/atualiza', UsuarioController.atualizaDados)
+
 //router.put('', UsuarioController)
 
 module.exports = router

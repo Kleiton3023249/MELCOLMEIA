@@ -13,7 +13,7 @@ class Usuario {
         this.senha = senha
     }
 
-    //CRUD - cadastro
+    //INCLUIR
     static async criaUsuario({ nome, email, senha }) {
         const query = 'INSERT INTO Usuario (nome, email, senha) VALUES (?, ?, ?)'
 
@@ -29,7 +29,7 @@ class Usuario {
         }
     }
 
-    //CRUD - exclusao // CONTROLER CRIADO
+    //EXCLUIR
     static async excluirUsuario(idUsuario) {
         const id = idUsuario
         const query = 'DELETE FROM Usuario WHERE id = ?'
@@ -51,8 +51,38 @@ class Usuario {
             if (conn) conn.release()
         }
     }
+    //ALTERAR DADOS
+
+    static async alteraDados(dados){
+
+        const query = 'update Usuario set nome = ?, email = ?, rua=?, cidade=?, estado=?, cep=?, pais=? where id = ?'
+        let conn 
+
+        {nome, email, rua, cidade, cep}
+        try{
+            conn = await connection.getConnection()
+            const [results] = await conn.query(query, [nome,email,rua,cidade,estado,cep,pais])
+
+            if(!results || results === 0){
+                console.log("Usuario nao encontrado")
+            }
+
+            return results
+
+        }catch (error){
+            console.log("Erro ao atualizar usuario", error.message)
+        }
+    }
 
 
+
+
+
+
+
+
+
+    //GETTERS E SETTERS
     static async getUsuarioByEmail(email){
         
         const query = "select * from Usuario where email = ?"
@@ -76,7 +106,32 @@ class Usuario {
             return res.status(500).send('Usuario nao encontrado')
         } 
     }
-    
+
+
+
+    static async getUsuarioById(id){
+        
+        const query = "select * from Usuario where id = ?"
+        let conn
+
+        try{
+            conn = await connection.getConnection()
+            const results = await conn.query(query, [id])
+            
+
+            if(!results || results.length === 0){
+                console.log("Usuario nao encontrado")
+                return res.status(400).send("Usuario nao encontrado")
+            }
+
+            const usuario = results[0]
+            return usuario
+
+        }catch(err){
+            console.log("erro de consulta DB: ", err)
+            return res.status(500).send('Usuario nao encontrado')
+        } 
+    }
 }
 
 
