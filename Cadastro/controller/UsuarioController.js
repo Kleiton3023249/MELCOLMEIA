@@ -60,7 +60,7 @@ const atualizaDados = async (req, res) =>{
 
     const usuario = await Usuario.getUsuarioById(id)
 
-    const response = await Usuario.atualizaDados({nome,email,rua,cidade,estado,cep,pais, id})
+    const response = await Usuario.alteraDados({nome,email,rua,cidade,estado,cep,pais, id})
 
     res.send(response)
 }

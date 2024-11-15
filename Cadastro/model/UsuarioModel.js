@@ -1,9 +1,7 @@
 const { query } = require('express');
-const connection = require('../config/db') // Chamo minha pool expotada do arq coneccao
+     // Chamo minha pool expotada do arq coneccao
 const mysql = require('mysql2/promise')
-
-
-
+const Colmeia = require('./ColmeiaModel') 
 
 class Usuario {
 
@@ -58,10 +56,11 @@ class Usuario {
         const query = 'update Usuario set nome = ?, email = ?, rua=?, cidade=?, estado=?, cep=?, pais=? where id = ?'
         let conn 
 
-        {nome, email, rua, cidade, cep}
+        let {nome, email, rua, cidade, estado, cep, pais, id} = dados
+
         try{
             conn = await connection.getConnection()
-            const [results] = await conn.query(query, [nome,email,rua,cidade,estado,cep,pais])
+            const [results] = await conn.query(query, [nome,email,rua,cidade,estado,cep,pais, id])
 
             if(!results || results === 0){
                 console.log("Usuario nao encontrado")
@@ -73,13 +72,6 @@ class Usuario {
             console.log("Erro ao atualizar usuario", error.message)
         }
     }
-
-
-
-
-
-
-
 
 
     //GETTERS E SETTERS
@@ -132,7 +124,24 @@ class Usuario {
             return res.status(500).send('Usuario nao encontrado')
         } 
     }
+
+    //cadastraColemia
+    
+
+    //excluiColemeia
+    //atualizaColmeia
+    //consultar colmeia
+
+
+    //consultar tarefas (filtro)
+    //atribuir tarefas
+    //reatribuir tarefas
+    //deletar tarefa
+    //concluir tarefa
 }
+
+
+
 
 
 
