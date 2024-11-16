@@ -1,7 +1,7 @@
 const { query } = require('express');
-     // Chamo minha pool expotada do arq coneccao
-const mysql = require('mysql2/promise')
-const Colmeia = require('./ColmeiaModel') 
+const connection = require('../config/db') 
+
+
 
 class Usuario {
 
@@ -17,13 +17,13 @@ class Usuario {
 
         let conn
         try {
-            conn = await connection.getConnection() // Obtendo uma conexão do pool
+            conn = await connection.getConnection() 
             const [results] = await conn.query(query, [nome, email, senha])
             return results.insertId;
         } catch (error) {
             throw new Error(`Erro ao inserir usuário no banco: ${error.message}`)
         } finally {
-            if (conn) conn.release();// Liberando a conexão de volta ao pool
+            if (conn) conn.release();
         }
     }
 

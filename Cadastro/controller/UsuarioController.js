@@ -16,7 +16,7 @@ const criaUsuario = async (req, res) => {
         res.status(201).json({id: novoUsuario, message: 'Usuario criado com sucesso'}) // como resposta, devolvo o status + texto informativo 
 
     }catch (error) {
-        res.status(500).json({error: 'Erro ao criar usuario', details: error.message})
+        res.status(500).json({error: 'Erro ao criar usuario (controller)', details: error.message})
     }
 }
 
