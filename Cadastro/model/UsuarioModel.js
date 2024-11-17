@@ -73,7 +73,6 @@ class Usuario {
         }
     }
 
-
     //GETTERS E SETTERS
     static async getUsuarioByEmail(email){
         
@@ -99,8 +98,6 @@ class Usuario {
         } 
     }
 
-
-
     static async getUsuarioById(id){
         
         const query = "select * from Usuario where id = ?"
@@ -124,7 +121,6 @@ class Usuario {
             return res.status(500).send('Usuario nao encontrado')
         } 
     }
-
     //cadastraColemia
     
 
