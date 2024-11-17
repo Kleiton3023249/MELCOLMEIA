@@ -14,21 +14,27 @@ function lerArquivo(caminho) {
 
 async function alimenta() {
   let conn
-  const query = 'insert into Especie(nome) values(?)'
+  const query = 'insert into Especie(nome, tipo) values(?, ?)'
   const conteudo = lerArquivo('/home/rafael-barros/Desktop/projeto/ApIrio/especie.txt')
   const especies = conteudo.split(",")
+  console.log(especies)
 
   try{
+
     conn = await connection.getConnection()
 
-    for(let i =0; i< especies.length; i++){
-      conn.query(query, [especies[i]])
-      console.log(especies[i], "Insedrio ")
+    for(let i = 0; i < especies.length-1; i+=2){
+      
+      conn.query(query, [especies[i], especies[i+1]])
+      console.log(especies[i], " - Insedrio ")
+      
     }
-
+    conn.release()
+    
   }catch(error){
     console.log('Erro ao concectar', error.message)
   }
-
-
+  
 }
+
+alimenta()
