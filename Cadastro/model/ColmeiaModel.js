@@ -13,14 +13,14 @@ class Colmeia {
         this.tempMedia = tempMedia
     }
 
-    static async cadastraColmeia({nome, numeroID, saude, especie, qtdAbelha, tipoColmeia, tempMedia}){
-        const query = 'insert into Colmeia(nome, numeroIdentificacao, estadoSaude, especie_id, qtdAbelhase, tipoColmeia, tempMedia) values(?,?,?,?,?,?,?)'
+    static async cadastraColmeia({nome, saude, especie, qtdAbelha, tipoColmeia, tempMedia}){
+        const query = 'insert into Colmeia(nome, estadoSaude, especie_id, qtdAbelhase, tipoColmeia, tempMedia) values(?,?,?,?,?,?,?)'
         let conn
 
         try{
 
             conn = await connection.getConnection()
-            const results = conn.query(query, [nome, numeroID, saude, especie, qtdAbelha, tipoColmeia, tempMedia])
+            const results = conn.query(query, [nome, saude, especie, qtdAbelha, tipoColmeia, tempMedia])
 
             console.log(results)
 
