@@ -3,6 +3,10 @@ const express = require('express')
 const Router = express.Router()
 
 Router.post('/', ColmeiaControler.cadastraColmeia)
+//exclui
+//Router.delete('/', ColmeiaControler.deletaColmeia)
+//deleta
+//atualiza(todos os dados)
 
 
 

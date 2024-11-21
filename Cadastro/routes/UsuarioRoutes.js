@@ -2,14 +2,13 @@ const express = require('express')
 const router = express.Router()
 const UsuarioController = require('../controller/UsuarioController')
 
-router.post('/cad', UsuarioController.criaUsuario)
+router.post('/cad', UsuarioController.criaUsuario) // cadastra
 
-router.delete('/Usuario/:id', UsuarioController.deletaUsuario)
+router.delete('/del', UsuarioController.deletaUsuario) //deleta
 
-router.post('/Usuario/login', UsuarioController.login)
+router.post('/login', UsuarioController.login) //loga
 
-router.put('/Usuario/atualiza', UsuarioController.atualizaDados)
+router.put('/Usuario/atualiza', UsuarioController.atualizaDados) //atualiz (todos os dados)
 
-//router.put('', UsuarioController)
 
 module.exports = router

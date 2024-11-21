@@ -1,6 +1,7 @@
 const Usuario = require('../model/UsuarioModel')
 const crypto = require('crypto')
 const jwt = require('jsonwebtoken')
+const { query } = require('../config/db')
 
 
 const criaUsuario = async (req, res) => {
@@ -22,8 +23,9 @@ const criaUsuario = async (req, res) => {
 
 
 const deletaUsuario = async (req, res) => {
+    console.log("chamou")
     try{
-        const {id} = req.params
+        const {id} = req.query
 
         await Usuario.excluirUsuario(id)
 
