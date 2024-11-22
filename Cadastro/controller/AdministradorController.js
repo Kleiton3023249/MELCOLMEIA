@@ -16,4 +16,24 @@ const addDados = async (req,res)=>{
     res.send(response)
 }
 
+//atribuir
+//Com a impementacao do Front, o usuario selecionara a tarefa por uma lista. a lista gerara o id p/ esta funcao
+const atribuiTask = async (req, res) => {
+    //DADOS: ID_USER, ID_TASK
+    const {id_usuario, id_tarefa} = req.body
+    //verificar tipos de colmeias do usuario e validar atribuicao (no momento, atribuisse sem verificacao)
+    //
+    
+}
+//concluir
+
+const concluiTask = async (req, res) => {
+
+}
+//exclui 
+const excluiTask = async (req, res) => {
+
+}
+
+
 module.exports = { addDados }

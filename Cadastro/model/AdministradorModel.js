@@ -31,6 +31,8 @@ class Administrador extends Usuario{
 
     }
 
+    
+
 }
 
 module.exports = Administrador
