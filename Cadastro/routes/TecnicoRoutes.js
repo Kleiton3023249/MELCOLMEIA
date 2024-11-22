@@ -1,6 +1,9 @@
+const express = require('express')
+const router = express.Router()
 const Controler = require("../controller/TecnicoController")
 
 
+    router.put('/addDados', Controler.addDados)
     // exclui colmeia
     // cadastra colemia
     // edita colmeia (total)
@@ -10,3 +13,5 @@ const Controler = require("../controller/TecnicoController")
     // exclui tarefa
     // consulta tarefas
     // detalha tarefas
+
+module.exports = {router}
