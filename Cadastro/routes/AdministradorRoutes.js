@@ -5,11 +5,11 @@ const controller = require('../controller/AdministradorController')
 router.put('/dados', controller.addDados)
 
 // atribuir task
+router.post('/addTask', controller.atribuiTask)
 
-router.post('', )
 // concluir task
-router.patch('', )
+    //router.patch('', )
 // excluir task
-router.delete('', )
+    //router.delete('', )
 
 module.exports = router

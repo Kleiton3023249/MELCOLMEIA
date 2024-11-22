@@ -15,8 +15,8 @@ function lerArquivo(caminho) {
 async function alimenta() {
   let conn
   //texto,cluster_primario,Objetivo,especie,pontos
-  const query = 'insert into Tarefa(texto,cluster_primario,objetivo,especie,pontos) values(?, ?, ?, ?, ?)'
-  const conteudo = lerArquivo('/home/rafael-barros/Desktop/projeto/ApIrio/Cadastro/bdTarefas.txt')
+  const query = 'insert into tarefa(texto,cluster_primario,objetivo,especie,pontos) values(?, ?, ?, ?, ?)'
+  const conteudo = lerArquivo('bdTarefas.txt')
   const tasks = conteudo.split(",")
 
   try{

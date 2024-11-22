@@ -31,6 +31,22 @@ class Administrador extends Usuario{
 
     }
 
+    static async atribuiTarefa(usuario_id, tarefa_id){
+
+        const query = 'insert into usuariotarefa(usuario_id, tarefa_id) values(?, ?)'
+        let conn
+
+        try{
+            conn = await connection.getConnection()
+            const [results] = await conn.query(query, [usuario_id, tarefa_id])
+
+            console.log(results)
+
+        }catch(error){
+            console.log("Erro ao conectar ao banco: ", error.message)
+        }
+    }
+
     
 
 }

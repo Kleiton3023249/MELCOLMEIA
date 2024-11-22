@@ -13,7 +13,6 @@ app.use('/Usuario', UsuarioRoutes)
 app.use('/Adm', AdmRoutes)
 app.use('/Colmeia', ColmeiaRoutes)
 
-
 const PORT = process.env.PORT
 
 app.listen(PORT, () => {
