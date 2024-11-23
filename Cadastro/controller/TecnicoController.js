@@ -1,16 +1,18 @@
-const Tecnico = require("../model/TecnicoModel")
-    // adicionar dados de tecnico
+ const Usuario = require('../model/UsuarioModel')
+ const Tec = require('../model/TecnicoModel')
 
-    const addDados = async (req,res)=>{
-            console.log(req.body)
-    }
-    // exclui colmeia
-    // cadastra colemia
-    // edita colmeia (total)
-    // consulta colmeias 
-    // detalha colmeia
-    // agenda tarefa
-    // exclui tarefa
-    // consulta tarefas
-    // detalha tarefas
-module.exports = {addDados}
+ //cadastrar colmeia
+
+ const cadColmeia = (req,res) => {
+
+    const {nome, estadoSaude, especie_id, qtdAbelhas, tipoColmeia, tempMedia} = req.body
+    const response = Tec.cadastraColmeia(nome, estadoSaude, especie_id, qtdAbelhas, tipoColmeia, tempMedia)
+
+    res.send(response)
+
+ }
+ //editar dados colmeia
+ //concluir tarefa 
+
+ module.exports = {cadColmeia}
+ 

@@ -1,19 +1,21 @@
 const connection = require('../config/db') 
+const Usuario = require('../model/UsuarioModel')
 
 class Tecnico extends Usuario{
     //metodos de tecnico
     
-
-
     // cadastra colemia
+    constructor(especialidade){
+        this.especialidade = especialidade
+    }
 
-    static async cadastraColmeia(dados){
+    static async cadastraColmeia(nome, estadoSaude, especie_id, qtdAbelhas, tipoColmeia, tempMedia){
         
-        const query = 'insert into Colmeia () values ()' //inserir os parametros de colmeia
+        const query = 'insert into colmeia(nome, estadoSaude, especie_id, qtdAbelhas, tipoColmeia, tempMedia) values (?, ?, ?, ?, ?, ?)' //inserir os parametros de colmeia
         let conn
         try{
             conn = await connection.getConnection()
-            const results = conn.query(query, []) // inserir os dados captados de colemias
+            const results = conn.query(query, [nome, estadoSaude, especie_id, qtdAbelhas, tipoColmeia, tempMedia])
             
             return results.insertID
 
@@ -45,18 +47,7 @@ class Tecnico extends Usuario{
             if (conn) conn.release()
         }
     }
-    // edita colmeia (total)
-    // consulta colmeias 
-    // detalha colmeia
-
-    // agenda tarefa
-    // exclui tarefa
-    // consulta tarefas
-    // detalha tarefas
-
-
-
-
+  
 }
 
-module.exports = {Tecnico}
+module.exports = Tecnico

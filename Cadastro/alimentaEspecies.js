@@ -15,7 +15,7 @@ function lerArquivo(caminho) {
 async function alimenta() {
   let conn
   const query = 'insert into Especie(nome, tipo) values(?, ?)'
-  const conteudo = lerArquivo('/home/rafael-barros/Desktop/projeto/ApIrio/especie.txt')
+  const conteudo = lerArquivo('especie.txt')
   const especies = conteudo.split(",")
   console.log(especies)
 
