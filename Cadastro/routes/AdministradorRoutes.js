@@ -6,10 +6,11 @@ router.put('/dados', controller.addDados)
 
 // atribuir task
 router.post('/addTask', controller.atribuiTask)
-
-// concluir task
-    //router.patch('', )
 // excluir task
-    //router.delete('', )
+router.delete('/delTask', controller.excluiTask)
+// mudar status 
+router.patch('/chgStatus', controller.mudarStatus)
+
+
 
 module.exports = router
